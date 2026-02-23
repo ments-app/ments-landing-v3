@@ -5,7 +5,11 @@
       "Bash(git add:*)",
       "Read(//Users/ayushmansingh/code/MentsV3.3/**)",
       "Bash(grep:*)",
-      "Bash(npx next build)"
+      "Bash(npx next build)",
+      "Bash(cd \"/Users/ayushmansingh/code/MentsV3.3/ments-landing \" && git add app/icon.svg app/layout.tsx && git commit -m \"$\\(cat <<'EOF'\nFix favicon to use ments logo mark instead of old banner image\n\nReplace the old \"ments. Hustle Begins Here.\" banner image favicon with\na proper SVG favicon using the ments binocular logo mark.\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\" && git status)",
+      "Bash(cd \"/Users/ayushmansingh/code/MentsV3.3/ments-landing \" && git pull --rebase origin main)",
+      "Bash(cd \"/Users/ayushmansingh/code/MentsV3.3/ments-landing \" && git stash && git pull --rebase origin main && git stash pop)",
+      "Bash(cd \"/Users/ayushmansingh/code/MentsV3.3/ments-landing \" && git push origin main)"
     ],
     "deny": [],
     "ask": []
