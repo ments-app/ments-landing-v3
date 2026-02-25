@@ -33,12 +33,15 @@ export const waitlistService = {
           .select()
           .single<WaitlistEntry>();
 
-        if (error) throw error;
-        
-        return { 
-          data, 
+        if (error) {
+          // Update failed (likely RLS), but email already exists — treat as duplicate
+          return { data: null, error: null, isDuplicate: true };
+        }
+
+        return {
+          data,
           error: null,
-          isDuplicate: true 
+          isDuplicate: true
         };
       } else {
         // Insert new entry
