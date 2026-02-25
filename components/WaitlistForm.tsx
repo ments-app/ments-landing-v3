@@ -88,7 +88,7 @@ export default function WaitlistForm() {
         message: formData.message?.trim(),
       });
 
-      if (isDuplicate && (error || !data)) {
+      if (isDuplicate) {
         toast({
           title: 'Already Registered',
           description: 'This email is already on our waitlist. Thank you for your interest!',
@@ -101,10 +101,8 @@ export default function WaitlistForm() {
       }
 
       toast({
-        title: isDuplicate ? 'Updated!' : 'Success!',
-        description: isDuplicate
-          ? 'Your information has been updated on our waitlist.'
-          : 'Thank you for joining our waitlist!',
+        title: 'Success!',
+        description: 'Thank you for joining our waitlist!',
       });
       
       // Only reset form if it's a new entry

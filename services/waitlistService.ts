@@ -53,91 +53,32 @@ export const waitlistService = {
         return { data, error: null, isDuplicate: false };
       }
     } catch (error: unknown) {
-      // Safely extract error information
-      let errorMessage = 'An unknown error occurred';
-      let errorName = 'UnknownError';
-      
-      // Initialize safe error object
-      const safeError: {
-        name: string;
-        message: string;
-        code?: string;
-        details?: any;
-        hint?: string;
-        status?: any;
-        statusCode?: any;
-        stack?: string;
-      } = {
-        name: errorName,
-        message: errorMessage
-      };
-      
-      // Process the error object
-      if (error) {
-        // Handle standard Error objects
-        if (error instanceof Error) {
-          safeError.name = error.name || 'Error';
-          safeError.message = error.message || 'Unknown error';
-          safeError.stack = error.stack;
-        } 
-        // Handle Supabase/PostgREST errors
-        else if (typeof error === 'object') {
-          const err = error as Record<string, unknown>;
-          
-          // Standard error properties
-          safeError.name = (err.name as string) || 'DatabaseError';
-          safeError.message = (err.message as string) || 'Database operation failed';
-          
-          // Supabase/PostgREST specific properties
-          if ('code' in err) safeError.code = String(err.code);
-          if ('details' in err) safeError.details = err.details;
-          if ('hint' in err) safeError.hint = String(err.hint || 'No hint provided');
-          if ('status' in err) safeError.status = err.status;
-          if ('statusCode' in err) safeError.statusCode = err.statusCode;
-          
-          // Handle specific error codes
-          if (safeError.code === 'PGRST204') {
-            safeError.message = 'Database table not found or empty result';
-            safeError.hint = 'Please verify that the "waitlist" table exists and contains data';
-          }
-        }
-        // Handle string errors
-        else if (typeof error === 'string') {
-          safeError.message = error;
-        }
+      // Stringify the entire error to catch duplicate/unique constraint in any form
+      const errorStr = JSON.stringify(error, Object.getOwnPropertyNames(error && typeof error === 'object' ? error : {})).toLowerCase();
+      const errorMsg = error instanceof Error ? error.message.toLowerCase() : '';
+      const errorCode = (error && typeof error === 'object' && 'code' in error) ? String((error as Record<string, unknown>).code) : '';
+
+      const isDuplicate = errorCode === '23505'
+        || errorStr.includes('unique')
+        || errorStr.includes('duplicate')
+        || errorStr.includes('23505')
+        || errorMsg.includes('unique')
+        || errorMsg.includes('duplicate');
+
+      if (isDuplicate) {
+        console.log('Duplicate email detected:', entry.email);
+        return { data: null, error: null, isDuplicate: true };
       }
 
-      // Create a safe error object for logging
-      const logError = {
-        timestamp: new Date().toISOString(),
-        service: 'waitlistService.addWaitlistEntry',
-        email: entry.email,
-        error: safeError,
-        environment: {
-          nodeEnv: process.env.NODE_ENV,
-          isClient: typeof window !== 'undefined'
-        }
-      };
+      console.error('Waitlist Service Error:', error);
 
-      // Log the error in a way that won't throw
-      try {
-        console.error('Waitlist Service Error:', JSON.stringify(logError, null, 2));
-      } catch (loggingError) {
-        // Fallback logging if JSON.stringify fails
-        console.error('Waitlist Service Error (fallback):', {
-          timestamp: new Date().toISOString(),
-          message: 'Failed to log error details',
-          originalError: safeError.message,
-          loggingError: loggingError instanceof Error ? loggingError.message : 'Unknown logging error'
-        });
-      }
-      
-      return { 
-        data: null, 
-        error: new Error(safeError.message || 'Failed to add to waitlist', { 
-          cause: error 
-        }),
-        isDuplicate: safeError.code === '23505' // Check for unique violation
+      return {
+        data: null,
+        error: new Error(
+          error instanceof Error ? error.message : 'Failed to add to waitlist',
+          { cause: error }
+        ),
+        isDuplicate: false
       };
     }
   },
