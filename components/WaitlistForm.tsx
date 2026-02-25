@@ -88,13 +88,21 @@ export default function WaitlistForm() {
         message: formData.message?.trim(),
       });
 
+      if (isDuplicate && (error || !data)) {
+        toast({
+          title: 'Already Registered',
+          description: 'This email is already on our waitlist. Thank you for your interest!',
+        });
+        return;
+      }
+
       if (error || !data) {
         throw error || new Error('Failed to submit form');
       }
 
       toast({
         title: isDuplicate ? 'Updated!' : 'Success!',
-        description: isDuplicate 
+        description: isDuplicate
           ? 'Your information has been updated on our waitlist.'
           : 'Thank you for joining our waitlist!',
       });
@@ -184,7 +192,7 @@ export default function WaitlistForm() {
         errorTitle = 'Connection Error';
         userMessage = 'Unable to connect to our servers. Please check your internet connection and try again.';
       } 
-      else if (errorMessage.includes('unique') || errorMessage.includes('duplicate')) {
+      else if (errorCode === '23505' || errorMessage.includes('unique') || errorMessage.includes('duplicate') || errorMessage.includes('already')) {
         errorTitle = 'Already Registered';
         userMessage = 'This email is already on our waitlist. Thank you for your interest!';
       } 
