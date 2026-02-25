@@ -5,7 +5,6 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import WaitlistDialog from "./WaitlistDialog";
 import Image from "next/image";
 
 const NAV_ITEMS = [
@@ -18,7 +17,6 @@ const NAV_ITEMS = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const [waitlistOpen, setWaitlistOpen] = useState(false);
 
   return (
     <motion.nav
@@ -27,13 +25,13 @@ export default function Navbar() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
     >
-      <div className="box-border w-full md:w-auto max-w-4xl 
+      <div className="box-border w-full md:w-auto max-w-4xl
                       bg-black/90 backdrop-blur-md rounded-full
                       px-4 md:px-8 py-4 flex items-center justify-between">
         {/* Brand */}
         <Link href="/" className=" flex items-center -ml- mr-4" aria-label="Ments home">
           <Image
-            src="/white.svg" 
+            src="/white.svg"
             alt="Ments logo"
             width={120}
             height={36}
@@ -52,19 +50,16 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Join Waitlist - Dialog lives here so it stays mounted when mobile menu closes */}
+        {/* Join Waitlist */}
         <div className="hidden md:block">
-          <WaitlistDialog
-            open={waitlistOpen}
-            onOpenChange={setWaitlistOpen}
-          >
-            <Button 
+          <Link href="/waitlist">
+            <Button
               variant="outline"
               className="bg-white text-black border-white hover:bg-gray-100 rounded-full px-6"
             >
               Join Waitlist
             </Button>
-          </WaitlistDialog>
+          </Link>
         </div>
 
         {/* Mobile hamburger */}
@@ -86,7 +81,7 @@ export default function Navbar() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="absolute top-full mt-2 left-0 right-0 
+            className="absolute top-full mt-2 left-0 right-0
                        bg-black/90 backdrop-blur-md rounded-2xl p-6 space-y-4 md:hidden"
           >
             {NAV_ITEMS.map(({ label, href }) => (
@@ -100,15 +95,11 @@ export default function Navbar() {
               </li>
             ))}
             <li>
-              <Button 
-                className="w-full rounded-full"
-                onClick={() => {
-                  setWaitlistOpen(true);
-                  setOpen(false);
-                }}
-              >
-                Join Waitlist
-              </Button>
+              <Link href="/waitlist" onClick={() => setOpen(false)}>
+                <Button className="w-full rounded-full">
+                  Join Waitlist
+                </Button>
+              </Link>
             </li>
           </motion.ul>
         )}

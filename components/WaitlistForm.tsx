@@ -265,6 +265,7 @@ export default function WaitlistForm() {
             <SelectContent className="bg-gray-900 border-gray-700 text-white">
               <SelectItem value="entrepreneur">Starting a Business</SelectItem>
               <SelectItem value="investor">Investment Opportunities</SelectItem>
+              <SelectItem value="job-seeker">Looking for Jobs & Gigs</SelectItem>
               <SelectItem value="partner">Partnership</SelectItem>
               <SelectItem value="other">Other</SelectItem>
             </SelectContent>

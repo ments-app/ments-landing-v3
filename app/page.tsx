@@ -6,7 +6,6 @@ import HeroSection from "@/components/hero-section";
 import FeaturesSection from "@/components/features-section";
 import HorizontalCarousel from "@/components/horizontal-carousel";
 import WhatsAppCTA from "@/components/whatsapp-cta";
-import EventsCareersCTA from "@/components/events-careers-cta";
 
 export default function Page() {
   return (
@@ -49,9 +48,6 @@ export default function Page() {
 
       {/* WhatsApp CTA */}
       <WhatsAppCTA />
-
-      {/* Events and Careers CTA */}
-      <EventsCareersCTA />
 
       {/* Floating Stars */}
       <motion.div
