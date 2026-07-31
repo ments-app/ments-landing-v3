@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect } from 'react';
+import Image from 'next/image';
 import SiteNav from '../components/SiteNav';
 import SiteFooter from '../components/SiteFooter';
 
@@ -94,20 +95,39 @@ export default function ForStartupsPage() {
           </div>
         </div>
 
-        {/* Right: startup console as the visual */}
-        <div
-          className="hero-visual"
-          style={{ background: `var(--color-black) url('/startup-dashboard.png') center / cover no-repeat` }}
-        >
+        {/* Right: the exact startup console inside a product mockup */}
+        <div className="hero-visual dashboard-hero">
           <div className="tech-pattern"></div>
           <div className="glow"></div>
 
-          <div className="hero-visual-card">
-            <div className="hvc-diamonds">
-              {Array.from({ length: 9 }).map((_, i) => <span key={i}></span>)}
+          <div className="dashboard-hero-content">
+            <div className="dashboard-kicker">
+              <span className="dashboard-status"></span>
+              Startup workspace / live preview
             </div>
-            <div className="hvc-title">Startup Console</div>
-            <div className="hvc-text">PROFILE // HIRING // INVESTORS // EVENTS</div>
+            <div className="laptop-mockup">
+              <div className="laptop-screen">
+                <div className="browser-bar" aria-hidden="true">
+                  <span></span><span></span><span></span>
+                  <div className="browser-address">business.ments.app</div>
+                </div>
+                <Image
+                  className="dashboard-image"
+                  src="/startup-dashboard.jpeg"
+                  alt="Ments startup dashboard showing jobs, gigs, events, applications, mentorship and quick actions"
+                  width={1280}
+                  height={729}
+                  loading="eager"
+                  sizes="(max-width: 992px) 92vw, 48vw"
+                />
+              </div>
+              <div className="laptop-base" aria-hidden="true">
+                <span></span>
+              </div>
+            </div>
+            <div className="dashboard-feature-line">
+              <span>Hiring</span><span>Mentorship</span><span>Applications</span><span>Events</span>
+            </div>
           </div>
         </div>
        </section>
@@ -149,11 +169,17 @@ export default function ForStartupsPage() {
           </div>
 
           <div className="console-frame scroll-anim">
-            <img
+            <div className="console-browser-bar" aria-hidden="true">
+              <span></span><span></span><span></span>
+              <div>Startup workspace · business.ments.app</div>
+            </div>
+            <Image
               className="console-shot"
-              src="/startup-dashboard.png"
+              src="/startup-dashboard.jpeg"
               alt="Ments Startup admin console — dashboard with jobs posted, gigs posted, events and quick actions"
-              loading="lazy"
+              width={1280}
+              height={729}
+              sizes="(max-width: 1280px) 92vw, 1216px"
             />
             <div className="console-caption">
               STARTUP / DASHBOARD — JOBS · GIGS · EVENTS · COMPETITIONS · QUICK ACTIONS

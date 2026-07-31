@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect } from 'react';
+import Image from 'next/image';
 import SiteNav from '../components/SiteNav';
 import SiteFooter from '../components/SiteFooter';
 
@@ -52,7 +53,7 @@ export default function EcosystemPartnersPage() {
 
             <div className="hero-eyebrow">Ments for Ecosystem Partners</div>
 
-            <h1 className="hero-headline">
+            <h1 className="hero-headline facilitator-headline">
               SAAS FOR
               <em className="serif">startup</em>
               FACILITATORS
@@ -93,20 +94,39 @@ export default function EcosystemPartnersPage() {
           </div>
         </div>
 
-        {/* Right: facilitator console as the visual */}
-        <div
-          className="hero-visual"
-          style={{ background: `var(--color-black) url('/facilitator-dashboard.png') center / cover no-repeat` }}
-        >
+        {/* Right: the exact facilitator console inside a product mockup */}
+        <div className="hero-visual dashboard-hero">
           <div className="tech-pattern"></div>
           <div className="glow"></div>
 
-          <div className="hero-visual-card">
-            <div className="hvc-diamonds">
-              {Array.from({ length: 9 }).map((_, i) => <span key={i}></span>)}
+          <div className="dashboard-hero-content">
+            <div className="dashboard-kicker">
+              <span className="dashboard-status"></span>
+              Ecosystem SaaS / live preview
             </div>
-            <div className="hvc-title">Facilitator Console</div>
-            <div className="hvc-text">COHORTS // VERIFICATION // HIRING // ANALYTICS</div>
+            <div className="laptop-mockup">
+              <div className="laptop-screen">
+                <div className="browser-bar" aria-hidden="true">
+                  <span></span><span></span><span></span>
+                  <div className="browser-address">business.ments.app</div>
+                </div>
+                <Image
+                  className="dashboard-image"
+                  src="/facilitator-dashboard.jpeg"
+                  alt="Ments facilitator dashboard showing verified startups, mentors, bookings, applications and quick actions"
+                  width={1280}
+                  height={722}
+                  loading="eager"
+                  sizes="(max-width: 992px) 92vw, 48vw"
+                />
+              </div>
+              <div className="laptop-base" aria-hidden="true">
+                <span></span>
+              </div>
+            </div>
+            <div className="dashboard-feature-line">
+              <span>Cohorts</span><span>Verification</span><span>Mentors</span><span>Analytics</span>
+            </div>
           </div>
         </div>
        </section>
@@ -150,11 +170,17 @@ export default function EcosystemPartnersPage() {
           </div>
 
           <div className="console-frame scroll-anim">
-            <img
+            <div className="console-browser-bar" aria-hidden="true">
+              <span></span><span></span><span></span>
+              <div>Facilitator workspace · business.ments.app</div>
+            </div>
+            <Image
               className="console-shot"
-              src="/facilitator-dashboard.png"
+              src="/facilitator-dashboard.jpeg"
               alt="Ments Facilitator admin console — dashboard with verified startups, jobs, events and competitions"
-              loading="lazy"
+              width={1280}
+              height={722}
+              sizes="(max-width: 1280px) 92vw, 1216px"
             />
             <div className="console-caption">
               FACILITATOR / DASHBOARD — VERIFIED STARTUPS · JOBS · EVENTS · COMPETITIONS · QUICK ACTIONS
