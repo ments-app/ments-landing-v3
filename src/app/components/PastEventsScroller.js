@@ -1,50 +1,64 @@
+import Image from "next/image";
+
 /* Past events: horizontal photo-card scroller.
    Used on the home Proof section and the Events page. */
 
 const EVENTS = [
   {
-    img: '/events/delta-expo.png',
-    meta: '01 · Platform Partner · Offline',
-    title: 'IIT Madras Delta Expo',
-    copy: 'Our first major collaboration. Ran Investment Arena — attendees received virtual cash to invest in startups, evaluating them like real investors.',
-    stat: '5,000 footfall · 3,000 day-one signups',
+    img: "/events/delta-expo.png",
+    meta: "01 · Platform Partner · Offline",
+    title: "IIT Madras Delta Expo",
+    copy: "Our first major collaboration. Ran Investment Arena — attendees received virtual cash to invest in startups, evaluating them like real investors.",
+    stat: "5,000 footfall · 3,000 day-one signups",
   },
   {
-    img: '/events/bits-pilani.jpeg',
-    meta: '02 · Platform Partner · Offline',
-    title: 'BITS Pilani Hyderabad eSummit',
-    copy: 'Investment Arena, internship drives with AI-powered interviews, and Pitchers Pilot — a Shark Tank-style format judged by a five-evaluator panel.',
-    stat: '500 paid users · 1,200 onboardings',
+    img: "/events/bits-pilani.jpeg",
+    meta: "02 · Platform Partner · Offline",
+    title: "BITS Pilani Hyderabad eSummit",
+    copy: "Investment Arena, internship drives with AI-powered interviews, and Pitchers Pilot — a Shark Tank-style format judged by a five-evaluator panel.",
+    stat: "500 paid users · 1,200 onboardings",
   },
   {
-    img: '/events/bangalore-meetup.png',
-    meta: '03 · With Aman Sharma · Offline',
-    title: 'Bengaluru Founder Meetup',
-    copy: 'A curated, high-trust networking room of founders, professionals and ecosystem participants — quality over scale.',
-    stat: 'Close to 100 founders & operators',
+    img: "/events/bangalore-meetup.png",
+    meta: "03 · With Aman Sharma · Offline",
+    title: "Bengaluru Founder Meetup",
+    copy: "A curated, high-trust networking room of founders, professionals and ecosystem participants — quality over scale.",
+    stat: "Close to 100 founders & operators",
   },
   {
-    img: '/events/women-founders.png',
-    meta: '04 · Ments Original · Virtual',
-    title: 'Women Founders Roundtable',
+    img: "/events/women-founders.png",
+    meta: "04 · Ments Original · Virtual",
+    title: "Women Founders Roundtable",
     copy: '"She Leads, She Builds" — a Women’s Day special where women founders across fintech, climate-tech and healthcare shared stories, success and strategies.',
-    stat: 'Online · Women’s Day Special',
+    stat: "Online · Women’s Day Special",
   },
   {
-    img: '/events/small-business-pitch.jpeg',
-    meta: '05 · Ments Original · Virtual',
-    title: 'Small Business, Big Impact',
-    copy: 'A virtual Ments pitch competition where small-business founders pitched live to a panel of angel and strategic investors.',
-    stat: 'Online · Pitch Competition',
+    img: "/events/small-business-pitch.jpeg",
+    meta: "05 · Ments Original · Virtual",
+    title: "Small Business, Big Impact",
+    copy: "A virtual Ments pitch competition where small-business founders pitched live to a panel of angel and strategic investors.",
+    stat: "Online · Pitch Competition",
   },
 ];
 
 export default function PastEventsScroller() {
   return (
-    <div className="past-grid">
+    <div
+      className="past-grid"
+      role="region"
+      aria-label="Past Ments events"
+      tabIndex={0}
+    >
       {EVENTS.map((event, i) => (
         <div key={i} className="past-card scroll-anim">
-          <img className="past-img" src={event.img} alt={event.title} loading="lazy" />
+          <Image
+            className="past-img"
+            src={event.img}
+            alt={event.title}
+            width={1080}
+            height={1080}
+            sizes="(max-width: 600px) 86vw, (max-width: 900px) 44vw, 30vw"
+          />
           <div className="past-meta">{event.meta}</div>
           <h3 className="past-title">{event.title}</h3>
           <p>{event.copy}</p>

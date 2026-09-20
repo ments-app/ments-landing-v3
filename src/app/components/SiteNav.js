@@ -1,48 +1,73 @@
-import Link from 'next/link';
-import Image from 'next/image';
+"use client";
+
+import { useRef } from "react";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import styles from "../page.module.css";
+import { WEBAPP_LOGIN_URL, landingAsset, landingUrl } from "../site";
 
 const NAV_LINKS = [
-  { href: '/#problem', label: 'Problem' },
-  { href: '/for-startups', label: 'For Startups' },
-  { href: '/ecosystem-partners', label: 'Ecosystem Partners' },
-  { href: '/events', label: 'Events' },
+  { href: "/#ecosystem", label: "The platform" },
+  { href: "/for-startups", label: "For startups" },
+  { href: "/ecosystem-partners", label: "For partners" },
+  { href: "/events", label: "Events" },
+  { href: "/about", label: "About us" },
 ];
 
-/* Shared navbar: white logo card + links over the hero visual.
-   Rendered as two grid children of .hero-grid on every page. */
 export default function SiteNav() {
+  const pathname = usePathname();
+  const menu = useRef(null);
+  const closeMenu = () => {
+    if (menu.current) menu.current.open = false;
+  };
+  const links = NAV_LINKS.map(({ href, label }) => (
+    <a
+      href={landingUrl(href)}
+      key={href}
+      aria-current={pathname === href ? "page" : undefined}
+      onClick={closeMenu}
+    >
+      {label}
+    </a>
+  ));
   return (
-    <>
-      <header className="nav-card">
-        <Link href="/" className="nav-brand">
-          <Image
-            className="brand-logo"
-            src="/ments Logo svg/horizontal/black_logo.svg"
-            alt="ments."
-            width={184}
-            height={56}
-            loading="eager"
-          />
-        </Link>
-
-        <details className="mobile-nav">
-          <summary className="menu-toggle" aria-label="Open navigation menu">
-            <span></span><span></span><span></span>
-          </summary>
-          <nav className="mobile-nav-panel" aria-label="Mobile navigation">
-            {NAV_LINKS.map((link) => (
-              <Link key={link.href} href={link.href}>{link.label}</Link>
-            ))}
-            <button className="auth-button">Login / Sign in</button>
-          </nav>
-        </details>
-      </header>
-      <nav className="nav-menu">
-        {NAV_LINKS.map((link) => (
-          <Link key={link.href} href={link.href}>{link.label}</Link>
-        ))}
-        <button className="auth-button">Login / Sign in</button>
+    <header className={styles.nav}>
+      <a className={styles.skip} href="#main">
+        Skip to content
+      </a>
+      <a href={landingUrl("/")} aria-label="Ments home">
+        <Image
+          src={landingAsset("/ments Logo svg/horizontal/black_logo.svg")}
+          alt="ments."
+          width={151}
+          height={46}
+          loading="eager"
+        />
+      </a>
+      <nav className={styles.desktopNav} aria-label="Main navigation">
+        {links}
       </nav>
-    </>
+      <a className={styles.navCta} href={WEBAPP_LOGIN_URL}>
+        Login / Sign in <span aria-hidden="true">↗</span>
+      </a>
+      <details
+        ref={menu}
+        className={styles.mobileNav}
+        onKeyDown={(event) => {
+          if (event.key === "Escape") {
+            closeMenu();
+            menu.current.querySelector("summary").focus();
+          }
+        }}
+      >
+        <summary aria-label="Toggle navigation">
+          <span aria-hidden="true">☰</span>
+        </summary>
+        <nav aria-label="Mobile navigation">
+          {links}
+          <a href={WEBAPP_LOGIN_URL}>Login / Sign in ↗</a>
+        </nav>
+      </details>
+    </header>
   );
 }

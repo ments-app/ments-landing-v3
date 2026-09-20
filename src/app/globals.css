@@ -431,7 +431,7 @@ p {
   grid-column: 2;
   grid-row: 1 / 3;
   border-radius: 10px;
-  background: var(--color-black) url('/hero image.jpg') center / cover no-repeat;
+  background: var(--color-black) url('https://info.ments.app/hero%20image.jpg') center / cover no-repeat;
   position: relative;
   overflow: hidden;
   display: flex;
@@ -1942,6 +1942,7 @@ p {
     font-size: 3rem;
   }
 }
+
 @media (max-width: 600px) {
   .hero-shell {
     padding: 8px;

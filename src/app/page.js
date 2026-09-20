@@ -1,262 +1,321 @@
-"use client";
-
-import React, { useEffect } from 'react';
-import SiteNav from './components/SiteNav';
-import SiteFooter from './components/SiteFooter';
-import PastEventsScroller from './components/PastEventsScroller';
+import Image from "next/image";
+import SiteFooter from "./components/SiteFooter";
+import SiteNav from "./components/SiteNav";
+import ProductTour from "./components/ProductTour";
+import styles from "./page.module.css";
+import { WEBAPP_LOGIN_URL, landingAsset, landingUrl } from "./site";
+import startup from "../../public/startup-dashboard.jpeg";
+import meetup from "../../public/events/bangalore-meetup.png";
+import delta from "../../public/events/delta-expo.png";
+import bits from "../../public/events/bits-pilani.jpeg";
 
 export default function Home() {
-  // Intersection Observer for scroll animations
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-in-up');
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const elements = document.querySelectorAll('.scroll-anim');
-    elements.forEach((el) => observer.observe(el));
-
-    return () => elements.forEach((el) => observer.unobserve(el));
-  }, []);
-
   return (
-    <div className="app">
-      {/* Framed hero: floating rounded cards on a dark frame (reference geometry) */}
-      <div className="hero-shell">
-       <section className="hero-grid">
-        {/* Navbar: white logo card (left) + links floating over the visual (right) */}
-        <SiteNav />
+    <div className={styles.page}>
+      <SiteNav />
 
-        {/* Left: white hero card */}
-        <div className="hero-card">
-          <div className="hero-center animate-fade-in-up">
-            <div className="hero-dots">
-              <span></span><span></span><span></span>
-            </div>
-
-            <div className="hero-eyebrow">Beta is live</div>
-
-            <h1 className="hero-headline">
-              THE STARTUP
-              <em className="serif">ecosystem,</em>
-              FINALLY CONNECTED
+      <main id="main">
+        <section className={styles.hero} aria-labelledby="hero-title">
+          <div className={styles.heroCopy}>
+            <span className={styles.eyebrow}>
+              <i /> THE STARTUP ECOSYSTEM · BETA IS LIVE
+            </span>
+            <h1 id="hero-title">
+              Big ideas.
+              <br />
+              Right people.
+              <br />
+              <em>One ecosystem.</em>
             </h1>
-
-            <p className="hero-sub">
-              Startup discovery, jobs, gigs, hiring, events, mentorship and
-              investor access — one focused platform for founders, startups,
-              builders and ecosystem partners.
+            <p>
+              Find your people, build your team, and open your next door. Your
+              startup journey belongs here.
             </p>
-
-            <div className="hero-actions">
-              <button className="btn btn-primary hero-cta">Join Beta</button>
-              <a href="#ecosystem" className="hero-link">See the Vision</a>
+            <div className={styles.actions}>
+              <a className={styles.primary} href={WEBAPP_LOGIN_URL}>
+                Start building <span aria-hidden="true">↗</span>
+              </a>
+              <a className={styles.textLink} href="#platform">
+                Explore the platform <span aria-hidden="true">↓</span>
+              </a>
+            </div>
+            <div className={styles.heroProof}>
+              <span className={styles.peopleMark} aria-hidden="true">
+                ✳
+              </span>
+              <span>
+                <strong>4,000+ people. One shared ambition.</strong>
+                <br />
+                Founders, builders, and the people backing them.
+              </span>
             </div>
           </div>
-
-          <div className="hero-stats">
-            <div className="hero-stat">
-              <span className="num">4,000+</span>
-              <span className="lbl">Users joined the beta</span>
+          <div className={styles.heroVisual}>
+            <div className={styles.visualTop}>
+              <span>YOUR NEXT CHAPTER STARTS HERE</span>
+              <span aria-hidden="true">✳</span>
             </div>
-            <div className="hero-stat">
-              <span className="num">200+</span>
-              <span className="lbl">Startups reached</span>
-            </div>
-            <div className="hero-stat">
-              <span className="num">3</span>
-              <span className="lbl">Ecosystem events</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Right: visual panel spanning the nav and hero rows */}
-        <div className="hero-visual">
-          <div className="tech-pattern"></div>
-          <div className="glow"></div>
-
-          <div className="hero-visual-card">
-            <div className="hvc-diamonds">
-              {Array.from({ length: 9 }).map((_, i) => <span key={i}></span>)}
-            </div>
-            <div className="hvc-title">Ecosystem Online</div>
-            <div className="hvc-text">BETA LIVE // 4,000+ BUILDERS ONBOARD</div>
-          </div>
-        </div>
-       </section>
-      </div>
-
-      {/* The Problem */}
-      <section id="problem" className="section container">
-        <div className="scroll-anim">
-          <div className="section-label">The Problem</div>
-          <h2 className="section-head">
-            Startup growth is <em className="serif">scattered.</em>
-          </h2>
-          <p className="section-lead">
-            Founders, students, builders and startup enablers depend on scattered
-            networks — LinkedIn, WhatsApp groups, college communities, incubators
-            and personal connections. The opportunities exist, but they are
-            fragmented, hard to verify and difficult to act on.
-          </p>
-          <div className="tag-row">
-            {['Co-founders', 'Mentors', 'Investors', 'Jobs', 'Gigs', 'Internships', 'Grants', 'Incubators', 'Events', 'Resources'].map((tag, i) => (
-              <span key={i} className="tag-pill">{tag}</span>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* One ecosystem, different entry points */}
-      <section id="ecosystem" className="section container">
-        <div className="scroll-anim">
-          <div className="section-label">Entry Points</div>
-          <h2 className="section-head">
-            One ecosystem. <em className="serif">different</em> entry points.
-          </h2>
-          <p className="section-lead">
-            MENTS works as a startup ecosystem layer. Founders, startups,
-            investors, mentors, talent and partners enter from different doors —
-            but operate inside one connected network.
-          </p>
-        </div>
-
-        <div className="entry-list">
-          {[
-            { num: '01', title: 'Founders', copy: 'Showcase your startup, find collaborators, discover jobs, gigs and events, and become visible to investors and ecosystem partners.' },
-            { num: '02', title: 'Startups', copy: 'Post jobs and gigs, manage applicants, run AI interviews, discover talent and build your public startup presence.' },
-            { num: '03', title: 'Partners', copy: 'Incubators, accelerators, e-cells and communities — manage cohorts, post events, run internship drives and track applications.' },
-            { num: '04', title: 'Investors & Mentors', copy: 'Discover early-stage startups, track founder signals and support high-intent founders through curated access.' },
-          ].map((entry, i) => (
-            <div key={i} className="entry-row scroll-anim">
-              <span className="entry-num">{entry.num}</span>
-              <h3 className="entry-title">{entry.title}</h3>
-              <p className="entry-copy">{entry.copy}</p>
-              <span className="entry-arrow">→</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Product Model */}
-      <section id="model" className="section model-section">
-        <div className="container">
-          <div className="scroll-anim">
-            <div className="section-label">The Product Model</div>
-            <h2 className="section-head">
-              Social on top. <em className="serif">infrastructure</em> underneath.
-            </h2>
-          </div>
-
-          <div className="model-rows">
-            {[
-              { layer: 'Layer 01', title: 'Social', points: ['Founder community', 'Startup discovery', 'Jobs & gigs', 'Real conversations', 'Events & visibility'] },
-              { layer: 'Layer 02', title: 'Startup SaaS', points: ['Startup profiles', 'Job & gig posting', 'Candidate dashboard', 'AI interviews', 'Talent discovery', 'Investor access'] },
-              { layer: 'Layer 03', title: 'Facilitator SaaS', points: ['Cohort management', 'Startup onboarding', 'Events & competitions', 'Internship drives', 'Application tracking', 'Analytics'] },
-            ].map((model, i) => (
-              <div key={i} className="model-row scroll-anim">
-                <span className="model-layer">{model.layer}</span>
-                <h3 className="model-title">{model.title}</h3>
-                <p className="model-points">{model.points.join(' / ')}</p>
+            <div className={styles.previewLabel}>
+              <span className={styles.smallIcon} aria-hidden="true">
+                ↗
+              </span>
+              <div>
+                Less switching tabs.
+                <br />
+                <strong>More building what matters.</strong>
               </div>
-            ))}
+            </div>
+            <div className={styles.heroScreen}>
+              <div className={styles.browserBar}>
+                <span aria-hidden="true">● ● ●</span>
+                <span>ments / startup workspace</span>
+                <span aria-hidden="true">↗</span>
+              </div>
+              <Image
+                src={startup}
+                alt="Ments startup workspace preview with hiring, mentorship sessions, and recent applications"
+                sizes="(max-width: 900px) 95vw, 55vw"
+                preload
+              />
+            </div>
+            <div className={styles.visualBottom}>
+              <span>
+                <i /> A place to connect. A workspace to grow.
+              </span>
+              <span>PRODUCT PREVIEW</span>
+            </div>
+          </div>
+        </section>
+
+        <div className={styles.numbers} aria-label="Ments community milestones">
+          <div>
+            <strong>
+              4,000<span>+</span>
+            </strong>
+            <span>users joined the beta</span>
+          </div>
+          <div>
+            <strong>
+              200<span>+</span>
+            </strong>
+            <span>startups reached</span>
+          </div>
+          <div className={styles.numbersNote}>
+            <span>
+              ONLINE CONNECTIONS.
+              <br />
+              <strong>REAL-WORLD POSSIBILITIES.</strong>
+            </span>
+            <a href="#events" aria-label="Explore the Ments community">
+              ↗
+            </a>
           </div>
         </div>
-      </section>
 
-      {/* Proof */}
-      <section id="proof" className="section container">
-        <div className="scroll-anim">
-          <div className="section-label">Proof</div>
-          <h2 className="section-head">
-            The ecosystem <em className="serif">already</em> exists.
-          </h2>
-          <p className="section-lead">
-            MENTS is not starting from zero — product, community and offline
-            startup rooms already compound into one ecosystem.
-          </p>
-        </div>
-
-        <div className="stats-strip scroll-anim">
-          <div className="hero-stat">
-            <span className="num">4,000+</span>
-            <span className="lbl">Users joined the beta</span>
-          </div>
-          <div className="hero-stat">
-            <span className="num">200+</span>
-            <span className="lbl">Startups reached</span>
-          </div>
-          <div className="hero-stat">
-            <span className="num">3</span>
-            <span className="lbl">Ecosystem events</span>
-          </div>
-        </div>
-
-        <div className="past-scroll-hint scroll-anim">Scroll to explore</div>
-        <PastEventsScroller />
-      </section>
-
-      {/* Events */}
-      <section id="events" className="section events-section">
-        <div className="container">
-          <div className="scroll-anim">
-            <div className="section-label">Events</div>
-            <h2 className="section-head">
-              From digital profiles to <em className="serif">real</em> founder rooms.
+        <section
+          id="ecosystem"
+          className={`${styles.section} ${styles.ecosystem}`}
+        >
+          <div id="problem" className={styles.sectionCopy}>
+            <span className={styles.eyebrow}>01 / FIND YOUR CIRCLE</span>
+            <h2>
+              Great things start
+              <br />
+              with the <em>right connection.</em>
             </h2>
-            <p className="section-lead">
-              Online startup discovery, connected to offline founder-investor
-              rooms, pitch days, competitions and hiring drives.
+            <p>
+              Talent in one group. Mentors in another. Ments brings your startup
+              world together, so the next step is easier to find.
+            </p>
+            <a className={styles.textLink} href={landingUrl("/for-startups")}>
+              Find your place in Ments <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+          <div
+            className={styles.network}
+            role="img"
+            aria-label="Ments connects founders and startups with talent, mentors, investors, and ecosystem partners"
+          >
+            <svg
+              viewBox="0 0 540 340"
+              preserveAspectRatio="none"
+              aria-hidden="true"
+            >
+              <path d="M270 170L120 65M270 170L425 65M270 170L85 230M270 170L450 230M270 170L270 300" />
+            </svg>
+            <span className={`${styles.node} ${styles.founders}`}>
+              <b>↗</b> Founders & startups
+            </span>
+            <span className={`${styles.node} ${styles.mentors}`}>
+              <b>✧</b> Mentors
+            </span>
+            <span className={`${styles.node} ${styles.talent}`}>
+              <b>⌘</b> Talent
+            </span>
+            <span className={`${styles.node} ${styles.investors}`}>
+              <b>↗</b> Investors
+            </span>
+            <span className={`${styles.node} ${styles.partners}`}>
+              <b>◎</b> Ecosystem partners
+            </span>
+            <span className={styles.networkCenter}>
+              <Image
+                src={landingAsset("/ments Logo svg/horizontal/white_logo.svg")}
+                alt=""
+                width={120}
+                height={38}
+              />
+            </span>
+          </div>
+        </section>
+
+        <section
+          id="platform"
+          className={`${styles.section} ${styles.product}`}
+        >
+          <div className={styles.sectionHeading}>
+            <div>
+              <span className={styles.eyebrow}>
+                02 / BUILT FOR YOUR NEXT MOVE
+              </span>
+              <h2>
+                Your ambition.
+                <br />
+                <em>Meet your workspace.</em>
+              </h2>
+            </div>
+            <p>
+              From your first hire to your next cohort.
+              <br />
+              See how it comes together in Ments.
             </p>
           </div>
+          <ProductTour />
+        </section>
 
-          <div className="proof-grid">
-            {[
-              { num: '01', title: 'Attend', copy: 'Join founder meetups, pitch days, panels, competitions and startup networking rooms.' },
-              { num: '02', title: 'Host', copy: 'E-cells, incubators, accelerators and communities publish events, manage registrations and bring their network online.' },
-              { num: '03', title: 'Sponsor', copy: 'Brands partner with startup-focused events to reach founders, investors, builders and ecosystem leaders.' },
-            ].map((item, i) => (
-              <div key={i} className="proof-col scroll-anim">
-                <span className="proof-num">{item.num}</span>
-                <h3 className="proof-title">{item.title}</h3>
-                <p>{item.copy}</p>
+        <section
+          id="events"
+          className={`${styles.section} ${styles.community}`}
+        >
+          <div className={styles.sectionHeading}>
+            <div>
+              <span className={styles.eyebrow}>
+                03 / CONNECTIONS BEYOND THE SCREEN
+              </span>
+              <h2>
+                Real people.
+                <br />
+                <em>Real momentum.</em>
+              </h2>
+            </div>
+            <a className={styles.textLink} href={landingUrl("/events")}>
+              Explore our events <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+          <div className={styles.eventGrid}>
+            <a
+              href={landingUrl("/events")}
+              className={`${styles.eventCard} ${styles.featuredEvent}`}
+            >
+              <div className={styles.eventPhoto}>
+                <Image
+                  src={meetup}
+                  alt="Founders and operators together at the Bengaluru Ments meetup"
+                  sizes="(max-width: 600px) 90vw, 50vw"
+                />
               </div>
-            ))}
+              <div className={styles.eventCaption}>
+                <span>THE COMMUNITY, IRL</span>
+                <h3>
+                  Bengaluru Founder Meetup <b aria-hidden="true">↗</b>
+                </h3>
+                <p>A room full of people building what comes next.</p>
+              </div>
+            </a>
+            <div className={styles.eventStack}>
+              <a href={landingUrl("/events")} className={styles.eventCard}>
+                <div className={styles.eventPhoto}>
+                  <Image
+                    src={delta}
+                    alt="Startup innovations and the Ments platform at IIT Madras Delta Expo"
+                    sizes="(max-width: 600px) 90vw, 40vw"
+                  />
+                </div>
+                <div className={styles.eventCaption}>
+                  <span>PLATFORM PARTNER</span>
+                  <h3>
+                    IIT Madras Delta Expo <b aria-hidden="true">↗</b>
+                  </h3>
+                </div>
+              </a>
+              <a href={landingUrl("/events")} className={styles.eventCard}>
+                <div className={styles.eventPhoto}>
+                  <Image
+                    src={bits}
+                    alt="Ments at BITS Pilani Hyderabad eSummit"
+                    sizes="(max-width: 600px) 90vw, 40vw"
+                  />
+                </div>
+                <div className={styles.eventCaption}>
+                  <span>PLATFORM PARTNER</span>
+                  <h3>
+                    BITS Pilani Hyderabad eSummit <b aria-hidden="true">↗</b>
+                  </h3>
+                </div>
+              </a>
+            </div>
           </div>
+        </section>
 
-          <div className="scroll-anim" style={{ marginTop: '3.5rem' }}>
-            <a href="/events" className="hero-link">Partner with us for your event →</a>
+        <section
+          className="home-about-preview"
+          aria-labelledby="home-about-title"
+        >
+          <div>
+            <span>THE PEOPLE BEHIND THE PLATFORM</span>
+            <h2 id="home-about-title">
+              Built with belief.
+              <br />
+              <em>And a little hustle.</em>
+            </h2>
+            <p>
+              Meet the Ments team and explore the workspace where our journey
+              began at Nirmaan, IIT Madras.
+            </p>
+            <a href={landingUrl("/about")}>
+              Get to know us <span aria-hidden="true">↗</span>
+            </a>
           </div>
-        </div>
-      </section>
+          <Image
+            src={landingAsset("/about/nirmaan-building.jpg")}
+            alt="Nirmaan workspace at IIT Madras in Chennai"
+            width={1024}
+            height={768}
+            sizes="(max-width: 600px) 90vw, 45vw"
+          />
+        </section>
 
-      {/* Final CTA */}
-      <section id="join" className="cta-section">
-        <div className="container scroll-anim">
-          <div className="section-label">Join the Beta</div>
-          <h2 className="section-head">
-            Start where your <em className="serif">ecosystem</em> begins.
+        <section id="join" className={styles.join}>
+          <span className={styles.eyebrow}>YOUR NEXT CHAPTER</span>
+          <h2>
+            You bring the idea.
+            <br />
+            <em>Let’s build the rest.</em>
           </h2>
-          <p>
-            Join MENTS as a founder, startup, builder, investor, mentor or
-            ecosystem partner — and help build the connected layer for
-            entrepreneurship.
-          </p>
-
-          <div className="cta-actions">
-            <button className="btn btn-green btn-mono">Join Beta</button>
-            <button className="btn btn-outline-light btn-mono">Partner With Us</button>
+          <p>Your people. Your opportunities. Your place to grow.</p>
+          <div className={styles.actions}>
+            <a className={styles.primary} href={WEBAPP_LOGIN_URL}>
+              Get started with Ments <span aria-hidden="true">↗</span>
+            </a>
+            <a className={styles.textLink} href={landingUrl("/ecosystem-partners")}>
+              Become a partner ↗
+            </a>
           </div>
-        </div>
-      </section>
-
+          <span className={styles.joinArt} aria-hidden="true">
+            ✳
+          </span>
+        </section>
+      </main>
       <SiteFooter />
     </div>
   );
