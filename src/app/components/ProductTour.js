@@ -5,9 +5,22 @@ import Image from "next/image";
 import startup from "../../../public/startup-dashboard.jpeg";
 import facilitator from "../../../public/facilitator-dashboard.jpeg";
 import styles from "../page.module.css";
-import { landingUrl } from "../site";
+import { WEBAPP_LOGIN_URL, landingUrl } from "../site";
+import community from "../../../public/product/ments-events.png";
 
 const workspaces = [
+  {
+    label: "The Ments app",
+    title: "Your next connection starts here.",
+    copy: "Discover startups, find events, and explore opportunities with the people building what’s next.",
+    points: ["Discover startups", "Find events & competitions", "Explore jobs & gigs"],
+    image: community,
+    alt: "The Ments web app events directory with event cards and filters for competitions, meetups, and workshops",
+    href: WEBAPP_LOGIN_URL,
+    cta: "Explore Ments",
+    screen: "ments.app / events & opportunities",
+    caption: "Real Ments web app · Open the screenshot to take a closer look",
+  },
   {
     label: "For startups",
     title: "Build your team. Grow your startup.",
@@ -44,7 +57,7 @@ export default function ProductTour() {
         : event.key === "End"
           ? workspaces.length - 1
           : ["ArrowLeft", "ArrowRight"].includes(event.key)
-            ? (index + 1) % workspaces.length
+            ? (index + (event.key === "ArrowRight" ? 1 : -1) + workspaces.length) % workspaces.length
             : null;
     if (next === null) return;
     event.preventDefault();
@@ -56,7 +69,7 @@ export default function ProductTour() {
       <div
         className={styles.tabs}
         role="tablist"
-        aria-label="Explore Ments workspaces"
+        aria-label="Explore the Ments app and workspaces"
       >
         {workspaces.map((item, index) => (
           <button
@@ -69,7 +82,7 @@ export default function ProductTour() {
             onClick={() => setSelected(index)}
             onKeyDown={(event) => handleKey(event, index)}
           >
-            <span aria-hidden="true">{index === 0 ? "↗" : "◎"}</span>
+            <span aria-hidden="true">{index === 0 ? "✳" : index === 1 ? "↗" : "◎"}</span>
             {item.label}
           </button>
         ))}
@@ -82,7 +95,7 @@ export default function ProductTour() {
         tabIndex={0}
       >
         <div className={styles.tourCopy}>
-          <span className={styles.eyebrow}>THE MENTS WORKSPACE</span>
+          <span className={styles.eyebrow}>YOUR WAY INTO MENTS</span>
           <h3>{workspace.title}</h3>
           <p>{workspace.copy}</p>
           <ul>
@@ -100,15 +113,23 @@ export default function ProductTour() {
         <figure className={styles.tourVisual}>
           <div className={styles.browserBar}>
             <span aria-hidden="true">● ● ●</span>
-            <span>{workspace.label} / dashboard</span>
+            <span>{workspace.screen || `${workspace.label} / dashboard`}</span>
           </div>
-          <Image
-            src={workspace.image}
-            alt={workspace.alt}
-            sizes="(max-width: 900px) 90vw, 65vw"
-          />
+          <a
+            href={workspace.image.src}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Open full-size screenshot: ${workspace.label}`}
+            className={styles.screenshotLink}
+          >
+            <Image
+              src={workspace.image}
+              alt={workspace.alt}
+              sizes="(max-width: 900px) 90vw, 65vw"
+            />
+          </a>
           <figcaption>
-            Workspace preview · Explore the features in detail
+            {workspace.caption || "Workspace preview · Open the screenshot to take a closer look"}
           </figcaption>
         </figure>
       </div>

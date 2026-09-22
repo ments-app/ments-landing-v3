@@ -457,6 +457,7 @@
 }
 .tabs {
   display: inline-flex;
+  flex-wrap: wrap;
   padding: 5px;
   gap: 5px;
   border: 1px solid #d6ddce;
@@ -515,6 +516,14 @@
   border-radius: 11px;
   box-shadow: 0 15px 35px #173e2b0a;
   background: #fff;
+}
+.screenshotLink {
+  display: block;
+  cursor: zoom-in;
+}
+.screenshotLink:focus-visible {
+  outline: 3px solid var(--green);
+  outline-offset: -3px;
 }
 .tourVisual img {
   width: 100%;

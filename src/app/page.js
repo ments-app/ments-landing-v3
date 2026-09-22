@@ -4,7 +4,7 @@ import SiteNav from "./components/SiteNav";
 import ProductTour from "./components/ProductTour";
 import styles from "./page.module.css";
 import { WEBAPP_LOGIN_URL, landingAsset, landingUrl } from "./site";
-import startup from "../../public/startup-dashboard.jpeg";
+import community from "../../public/product/ments-startups.png";
 import meetup from "../../public/events/bangalore-meetup.png";
 import delta from "../../public/events/delta-expo.png";
 import bits from "../../public/events/bits-pilani.jpeg";
@@ -60,20 +60,20 @@ export default function Home() {
                 ↗
               </span>
               <div>
-                Less switching tabs.
+                Discover what’s next.
                 <br />
-                <strong>More building what matters.</strong>
+                <strong>Meet the people building it.</strong>
               </div>
             </div>
             <div className={styles.heroScreen}>
               <div className={styles.browserBar}>
                 <span aria-hidden="true">● ● ●</span>
-                <span>ments / startup workspace</span>
+                <span>ments.app / discover startups</span>
                 <span aria-hidden="true">↗</span>
               </div>
               <Image
-                src={startup}
-                alt="Ments startup workspace preview with hiring, mentorship sessions, and recent applications"
+                src={community}
+                alt="The Ments web app showing startup discovery, stage filters, and ranked startup profiles"
                 sizes="(max-width: 900px) 95vw, 55vw"
                 preload
               />
@@ -185,7 +185,7 @@ export default function Home() {
               </h2>
             </div>
             <p>
-              From your first hire to your next cohort.
+              From your next connection to your next cohort.
               <br />
               See how it comes together in Ments.
             </p>
